@@ -41,7 +41,7 @@ func getWorksheets(files []*zip.File) ([]string, *map[string]*zip.File, error) {
 	sheetNames := make([]string, len(wb.Sheets))
 
 	for i, sheet := range wb.Sheets {
-		sheetFilename := "xl/worksheets/sheet" + strconv.Itoa(i) + ".xml"
+		sheetFilename := "xl/worksheets/sheet" + strconv.Itoa(i+1) + ".xml"
 		sheetFile, err := getFileForName(files, sheetFilename)
 		if err != nil {
 			return nil, nil, err
