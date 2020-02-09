@@ -3,7 +3,7 @@ package xlsxreader
 import (
 	"archive/zip"
 	"encoding/xml"
-	"strings"
+	"strconv"
 )
 
 // workbook is a struct representing the data we care about from the workbook.xml file.
@@ -15,11 +15,6 @@ type workbook struct {
 type sheet struct {
 	Name    string `xml:"name,attr,omitempty"`
 	SheetID int    `xml:"sheetId,attr,omitempty"`
-	RID     string `xml:"id,attr,omitempty"` 
-}
-
-func (s *sheet) SheetRealID() string {
-	return strings.TrimPrefix(s.RID, "rId")
 }
 
 // getWorksheets loads the workbook.xml file and extracts a list of worksheets, along
@@ -46,7 +41,7 @@ func getWorksheets(files []*zip.File) ([]string, *map[string]*zip.File, error) {
 	sheetNames := make([]string, len(wb.Sheets))
 
 	for i, sheet := range wb.Sheets {
-		sheetFilename := "xl/worksheets/sheet" + sheet.SheetRealID() + ".xml"
+		sheetFilename := "xl/worksheets/sheet" + strconv.Itoa(i) + ".xml"
 		sheetFile, err := getFileForName(files, sheetFilename)
 		if err != nil {
 			return nil, nil, err
