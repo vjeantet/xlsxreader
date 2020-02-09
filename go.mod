@@ -1,3 +1,3 @@
-module github.com/thedatashed/xlsxreader
+module github.com/vjeantet/xlsxreader
 
 require github.com/stretchr/testify v1.3.0
